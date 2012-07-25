@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:paddingBottom="10dp">
+    
+     <LinearLayout 
+        android:orientation="horizontal" 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:background="@drawable/alarm_clock"
+        android:padding="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        
+        >
+    <TextView
+        android:id="@+id/tvHour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:text="10"
+        style="@style/AlarmText"
+        />
+    
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=":"
+        style="@style/AlarmText"
+        />
+    
+    <TextView 
+        android:id="@+id/tvMinute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10"
+        style="@style/AlarmText"
+        />
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="  "
+       style="@style/AlarmText"
+        />
+    <TextView 
+        android:id="@+id/tvAM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AM"
+       	style="@style/AlarmText"
+        />
+    
+    </LinearLayout>
+    
+  <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+     android:gravity="center_horizontal"
+     android:stretchColumns="0,1,2,3,4,5,6"
+   android:layout_marginLeft="40dp"
+   android:layout_marginRight="40dp"
+   >
+    <TableRow>
+        
+    <TextView 
+        android:id="@+id/tvDay1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Su"
+        style="@style/DayText"
+        />
+        <TextView 
+        android:id="@+id/tvDay2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="M"
+        
+        style="@style/DayText"
+        /> 
+        <TextView 
+        android:id="@+id/tvDay3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tu"
+       
+        style="@style/DayText"
+        /> 
+        <TextView 
+        android:id="@+id/tvDay4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="W"
+        
+        style="@style/DayText"
+        /> 
+        <TextView 
+        android:id="@+id/tvDay5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Th"
+       
+        style="@style/DayText"
+        /> 
+        <TextView 
+        android:id="@+id/tvDay6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fr"
+      
+        style="@style/DayText"
+        /> 
+        <TextView 
+        android:id="@+id/tvDay7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sa"
+       
+        style="@style/DayText"
+        />
+</TableRow>
+</TableLayout>
+    
+
+</LinearLayout>

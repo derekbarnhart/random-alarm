@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:background="#FA6900"
+    android:gravity="center_vertical|center_horizontal"
+    >
+<Button
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/alarmStop"
+    android:background="@drawable/add_button"
+    android:layout_gravity="center_horizontal"
+    android:textColor="#FFFFFF"
+    android:textSize="40dip"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="10dip"
+    android:padding= "30dip"
+    
+    android:text="Stop!"
+    
+    android:onClick="buttonHandler"
+    
+    
+    ></Button>
+
+</LinearLayout>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#E0E4CC"
+    android:gravity="center_horizontal"
+    >
+
+    
+    <LinearLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+ 
+    >
+    <TimePicker
+        android:id="@+id/timePicker1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingTop="15dp"
+         android:paddingBottom="15dp"
+        android:background = "@drawable/alarm_clock"
+       
+        />
+    
+   
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:layout_marginTop="20dp"
+    android:padding="10dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:background="@drawable/panel"
+    >
+    <TextView    
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Alarm will sound on these days ..."
+    android:textColor="#CC0000"
+    android:textStyle="bold"
+    android:textSize="15dp"
+    android:gravity="center_horizontal"
+    
+    >
+    </TextView>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:gravity="center_horizontal"
+    android:layout_marginTop="20dp"
+    >
+    
+    
+    <ToggleButton
+        android:id="@+id/toggleDay2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="M"
+        android:textOn="M"  />
+    <ToggleButton
+        android:id="@+id/toggleDay3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="Tu"
+        android:textOn="Tu"  />
+    <ToggleButton
+        android:id="@+id/toggleDay4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="W"
+        android:textOn="W"  />
+    <ToggleButton
+        android:id="@+id/toggleDay5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:textOff="Th"
+        android:textOn="Th"  />
+    <ToggleButton
+        android:id="@+id/toggleDay6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="F"
+        android:textOn="F"  />
+    
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:gravity="center_horizontal"
+    android:layout_marginTop="10dp"
+    >
+    
+<ToggleButton
+        android:id="@+id/toggleDay7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="Sa"
+        android:textOn="Sa"  />
+<ToggleButton
+        android:id="@+id/toggleDay1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="Su"
+        android:textOn="Su" />
+
+</LinearLayout>
+</LinearLayout>
+<Button
+    android:id="@+id/btnDone"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:text="Save"
+    android:onClick="buttonHandler"
+     android:layout_gravity="bottom"
+     
+    android:textColor="#FFFFFF"
+   	android:textStyle="bold"
+    android:padding="20dip"
+    android:background="@drawable/add_button"
+    android:textSize="35dp"
+    >
+    
+</Button>
+
+<Button
+    android:id="@+id/btnCancel"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:text="Cancel"
+    android:onClick="buttonHandler"
+     android:layout_gravity="bottom"
+     
+    android:textColor="#FFFFFF"
+   	android:textStyle="bold"
+    android:padding="20dip"
+    android:background="@drawable/grey_button"
+    android:textSize="35dp"
+    ></Button>
+
+
+</LinearLayout>
+</LinearLayout>
