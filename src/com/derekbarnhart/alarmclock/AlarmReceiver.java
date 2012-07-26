@@ -1,16 +1,17 @@
+/*	AlarmReceiver.java
+ * 
+ * 	This class has 2 functions
+ * 	1) Reload the alarms after a reboot since all pending intents are wiped out by that event
+ * 	2) Receive the pending intent from an alarm once triggered and launch the alarm activity
+ * 
+ */
+
 package com.derekbarnhart.alarmclock;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Vibrator;
 import android.util.Log;
-import android.widget.Toast;
 
 public class AlarmReceiver extends BroadcastReceiver {
 

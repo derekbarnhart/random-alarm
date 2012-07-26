@@ -54,6 +54,7 @@ public class RandomAlarmClockActivity extends Activity {
 	
 	ArrayList<Alarm> mAlarms;
 	long rowId=0L;
+	
 	// Mapping of columns to views
 	String[] from = new String[] {"hour", "minute","am", "day1", "day2", "day3", "day4", "day5", "day6", "day7"};
     int[] to = new int[] { R.id.tvHour, R.id.tvMinute, R.id.tvAM, R.id.tvDay1, R.id.tvDay2, R.id.tvDay3, R.id.tvDay4, R.id.tvDay5, R.id.tvDay6, R.id.tvDay7 };
@@ -69,7 +70,10 @@ public class RandomAlarmClockActivity extends Activity {
        mAlarms = new ArrayList<Alarm>();
        alarmHelper = new AlarmHelper(this);
        tvClock =(TextView) findViewById(R.id.tvClock);
+       
+       //Initially set the clock view to the current time
        setClock();
+       
        updateInterface(false);
         
        //View footer = getLayoutInflater().inflate(R.layout.footer, null);
@@ -83,7 +87,8 @@ public class RandomAlarmClockActivity extends Activity {
        
        
        this.registerForContextMenu(alarmListView);    
-        alarmListView.setOnItemClickListener(new OnItemClickListener() {
+        
+       alarmListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -93,15 +98,20 @@ public class RandomAlarmClockActivity extends Activity {
 						//Toast.LENGTH_LONG).show();
 				*/
 		
+					
         Intent editIntent = new Intent(RandomAlarmClockActivity.this, EditAlarmActivity.class);
 		Bundle sendBundle = new Bundle();
 		
+		// Add the extras for the specific alarm that was selected
 		editIntent.putExtra("hour",alarmHelper.alarms.get(position).getHour());
 		editIntent.putExtra("minute", alarmHelper.alarms.get(position).getMinute());
 		editIntent.putExtra("days", alarmHelper.alarms.get(position).getDays());		
+		
+		//set the global rowId to the current position
 		rowId = alarmHelper.alarms.get(position).getId();
 		
 		Log.d(TAG,"rowId "+rowId);
+		
         startActivityForResult(editIntent,EDIT_ALARM);   		
         return;	
 			}     		
@@ -152,8 +162,10 @@ public class RandomAlarmClockActivity extends Activity {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.delete:
+            	
                 alarmHelper.deleteAlarm(rowId);
                 updateInterface(false);
+                
                 Toast.makeText(this, "Alarm removed",
     					Toast.LENGTH_LONG).show();
                 return true;
@@ -168,8 +180,10 @@ public class RandomAlarmClockActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(resultCode == Activity.RESULT_OK)
 		{
+			
 		boolean[] daysResult= new boolean[7];
 		String logString = "";
+		
 		switch(requestCode)
 		{
 		case ADD_ALARM:	
@@ -180,17 +194,24 @@ public class RandomAlarmClockActivity extends Activity {
 			}
 			alarmHelper.addAlarm(data.getIntExtra("hour",0),data.getIntExtra("minute",0),daysResult);
 			
-			Toast.makeText(this, "Alarm set",
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Alarm set",Toast.LENGTH_LONG).show();
 			break;
 
 		case EDIT_ALARM:
 				
+			
+			//Loop through all 7 days in a week and 
+			//use the index to build the "extra" key name and finally
+			//load the value of that extra to fill the array representing
+			//the days to play the alarm
+			
 			for(int i = 0; i<7;i++)
 			{
 				daysResult[i] = data.getBooleanExtra("day"+(i+1), false);
-				logString +=" day"+(i+1)+ Boolean.toString(daysResult[i]);	
+				logString +=" day"+(i+1)+ Boolean.toString(daysResult[i]);//used for debugging	
 			}	
+			
+			//Save the changes
 			alarmHelper.updateAlarm(rowId,data.getIntExtra("hour",0),data.getIntExtra("minute",0),daysResult);
 			
 			Toast.makeText(this, "Alarm updated",
@@ -200,6 +221,8 @@ public class RandomAlarmClockActivity extends Activity {
 			
 			break;
 		}
+		
+		//Change the display to reflect the changes
 		updateInterface(false);
 		}
 	}
@@ -214,6 +237,9 @@ public class RandomAlarmClockActivity extends Activity {
     }
     
     
+    
+    //This is simply used to update the initial clock whenever there is a 
+    //android broadcast for TIME_TICK
     BroadcastReceiver mReceiver = new BroadcastReceiver(){
 
 		@Override
@@ -225,14 +251,16 @@ public class RandomAlarmClockActivity extends Activity {
     };
     
     
+    /**
+     * Updates the UI clock
+     * @return Nothing.
+     */
     public void setClock()
     {
     	Date t = new Date();
 		t.setTime(java.lang.System.currentTimeMillis());
 		SimpleDateFormat dt1 = new SimpleDateFormat("h:mm a");
 		tvClock.setText(dt1.format(t));
-    	//Find out the next time this is supposed to fire
-    	//Figure out which day it is
     }
      
 }

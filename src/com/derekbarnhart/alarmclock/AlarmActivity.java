@@ -1,3 +1,10 @@
+/* AlarmActivity.java
+ * 
+ * 	This activity displays the alarm and allows the user to cancel it
+ *
+ */
+
+
 package com.derekbarnhart.alarmclock;
 
 import java.util.Timer;
@@ -26,9 +33,11 @@ public class AlarmActivity extends Activity
 	Ringtone r;
 	Vibrator vibrator;
 	PowerManager.WakeLock wl;
+	
 	int requestCode;
 	boolean mRepeat = true;
-	Thread repeatThread;
+	
+	Thread repeatThread;// Needed because some sounds will be one shot and will not repeat
 	long mDelay = 500;
 	long mAutoCancelDelay = 2;// How long the alarm plays before automatically stopping in minutes
 	
@@ -45,36 +54,44 @@ public class AlarmActivity extends Activity
 				 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED );
 			
 		Timer thisTimer = new Timer("autoAlarmKiller"); 
+		//Set the alarm to auto cancel 
 		thisTimer.schedule(forceCancel, 1000 * 60 * mAutoCancelDelay);
 		
+		
+		//Get set up the screen to be woken up and stay lit
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "My Tag");
-		 
 		 wl.acquire();
+		 
 		 Intent intent = getIntent();
 		 requestCode = intent.getIntExtra("requestCode", 0);
-
+		 
 		 Toast.makeText(this, "Alarm Triggered.",
 				Toast.LENGTH_LONG).show();
 		
 		RingtoneManager ringManager = new RingtoneManager(this);
 		//ringManager.setType(RingtoneManager.TYPE_ALARM);
 		
+		//Get a list of all the ringtones
 		Cursor ringtoneCursor = ringManager.getCursor();
 		Uri notification;
+		
+		
 		if(ringtoneCursor.moveToFirst())
-		{
-			
+		{	
 			int columns = ringtoneCursor.getColumnCount();
 			String columnName = "";
+			
+			//Simply used for debugging 
 			for(int i = 0; i<columns;i++)
 			{
-				columnName += ringtoneCursor.getColumnName(i)+"("+i+") "; 
-				
+				columnName += ringtoneCursor.getColumnName(i)+"("+i+") "; 		
 			}
 			Log.d(TAG,columnName);
 			
 			
+			
+			//Randomly select a ringtone
 			int ringtoneCount = ringtoneCursor.getCount();
 			int index = Math.round((float)(Math.random()*ringtoneCount));			
 				
@@ -82,17 +99,19 @@ public class AlarmActivity extends Activity
 						
 		}else
 		{
-		//Play the default one in here	
+		// 	For some reason we couldn't move to the first element in the results 	
+		//	Play the default ringtone instead
 			notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 		}
 		
 		r = RingtoneManager.getRingtone(this, notification);
 		r.setStreamType(AudioManager.STREAM_ALARM);
-		ringManager.stopPreviousRingtone();
-		//r.play();
+		ringManager.stopPreviousRingtone();//Stop any previous ringtone as a precaution
+		
 		repeatThread = new Thread(alarmRepeater);
 		repeatThread.start();
-		// Vibrate the mobile phone
+		
+		// Vibrate the phone now
 		vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
 		long[] pattern = {0,500,500};
 		vibrator.vibrate(pattern,0);	
@@ -103,10 +122,8 @@ public class AlarmActivity extends Activity
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		 
-		
-		
 		if(wl != null)
-		{
+		{// release the wakelock
 			wl.release();
 		}
 		super.onDestroy();
@@ -119,16 +136,7 @@ public class AlarmActivity extends Activity
 		switch(view.getId())
 		{
 			case R.id.alarmStop:
-				/*mRepeat = false;				
-				r.stop();// Shut off the tone
-				vibrator.cancel();// Shut off the vibration
-				
-				//Reset the alarm
-				AlarmHelper alarmHelper = new AlarmHelper(this);
-				alarmHelper.resetAlarm(requestCode);
-				Toast.makeText(this, "Alarm Reset",
-				Toast.LENGTH_LONG).show();
-			*/
+				//If kill the alarm if the button is pressed
 				killAlarm();
 					
 				break;
@@ -150,9 +158,11 @@ public class AlarmActivity extends Activity
 			{
 				if(!r.isPlaying())
 				{
+					//Play the alarm
 					r.play();	
 				}else
 				{
+					//The alarm isnt playing so take a quick pause
 					try
 					{
 						this.wait(mDelay);
@@ -164,7 +174,7 @@ public class AlarmActivity extends Activity
 		}
 	};
 	
-	
+	//This task exists only to force kill the alarm if the max time is exceeded
 	TimerTask forceCancel = new TimerTask(){
 
 		@Override
@@ -176,8 +186,8 @@ public class AlarmActivity extends Activity
 	};
 
 	public void killAlarm()
-	{
-		mRepeat = false;				
+	{	
+		mRepeat = false;// This will break the repeat loop				
 		r.stop();// Shut off the tone
 		vibrator.cancel();// Shut off the vibration
 		

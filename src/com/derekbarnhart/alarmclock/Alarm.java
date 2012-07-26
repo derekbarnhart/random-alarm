@@ -1,3 +1,10 @@
+/* Alarm.java
+ * 
+ *	Class to define an alarm and handle conversion of day abbreviation strings to boolean arrays
+ *
+ */
+ 
+
 package com.derekbarnhart.alarmclock;
 
 import java.util.Arrays;
@@ -7,11 +14,11 @@ public class Alarm {
 
  private static final String[] dayReference = { "Su","M","Tu","W","Th","F","Sa"};
 	
-  int hour;
-  int minute;
-  boolean[] days;
+  int hour;// Hour of the alarm
+  int minute;// minute of alarm
+  boolean[] days;// Array noting which days to play the alarm on 
   
-  long id;
+  long id; //database ID, this is needed to cancel PendingIntents
   
     
 public long getId() {
@@ -38,6 +45,11 @@ public boolean getDay(int day)
 	return days[day];
 }
 
+/**
+ * This method demonstrates square().
+ * @param day an integer value representing the day of the week.
+ * @return String with day abbreviation or a space.
+ */
 public String getDayString(int day)
 {
 
@@ -55,6 +67,13 @@ public void setDay(int day,boolean value)
 	days[day] = value;
 }
 
+
+/**
+ * This method builds a string composed of day abbreviations.
+ * @return Nothing.
+ * @exception IOException On input error.
+ * @see IOException
+ */
 public String getDaysString()
 {
 	String result = "";
@@ -71,6 +90,12 @@ public String getDaysString()
 	return result;
 }
 
+
+/**
+ * This method accepts a string of day abbreviations and uses it to set the instance boolean array
+ * @param dayString A string of day abbreviations.
+ * @return Nothing.
+ */
 public void setDaysString(String dayString)
 {
 	// New code:	

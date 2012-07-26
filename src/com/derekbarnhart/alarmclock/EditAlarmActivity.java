@@ -50,7 +50,6 @@ public class EditAlarmActivity extends Activity {
         } else
         {
         	setDay();
-        	
         }
     }
     
@@ -60,6 +59,7 @@ public class EditAlarmActivity extends Activity {
     	{
     	case R.id.btnDone:
     		
+    		//Load buttons
     		TimePicker time =(TimePicker) findViewById(R.id.timePicker1);
     		ToggleButton day1 = (ToggleButton) findViewById(R.id.toggleDay1);
     		ToggleButton day2 = (ToggleButton) findViewById(R.id.toggleDay2);
@@ -69,10 +69,12 @@ public class EditAlarmActivity extends Activity {
     		ToggleButton day6 = (ToggleButton) findViewById(R.id.toggleDay6);
     		ToggleButton day7 = (ToggleButton) findViewById(R.id.toggleDay7);
 
+    		//Create intent and load it with the collected data
     	Intent result = new Intent();
     	result.putExtra("hour", time.getCurrentHour().intValue());
     	result.putExtra("minute", time.getCurrentMinute().intValue());
     	
+    	//Validate that atleast one day is checked
     	if(day1.isChecked()||day2.isChecked()||day3.isChecked()||day4.isChecked()
     	   ||day5.isChecked()||day6.isChecked()||day7.isChecked())
     	{
@@ -86,7 +88,8 @@ public class EditAlarmActivity extends Activity {
     		setResult(RESULT_OK,result);
     		finish();
     	}else
-    	{
+    	{// Post an alert notifying that we need the alarm active on some days
+    		
     		AlertDialog ad = new AlertDialog.Builder(this).create();  
     		ad.setCancelable(false); // This blocks the 'BACK' button  
     		ad.setTitle("Which Days?");

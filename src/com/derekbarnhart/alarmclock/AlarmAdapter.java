@@ -1,14 +1,13 @@
+/*
+ * 	AlarmAdapter.java
+ * 
+ * 	This provides database access to the SQLite database
+ * 
+ */
 package com.derekbarnhart.alarmclock;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.Date;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteException;
@@ -36,7 +35,6 @@ public class AlarmAdapter {
   private final Context context;
   private DBOpenHelper dbHelper;
   
-
   public AlarmAdapter(Context _context) {
     this.context = _context;
     dbHelper = new DBOpenHelper(context, DATABASE_NAME, 
@@ -70,12 +68,12 @@ public class AlarmAdapter {
     return db.insert(DATABASE_TABLE, null, newValues);
   }
 
-  // Remove a task based on its index
+  // Remove an alarm based on its index
   public boolean remove(long _rowIndex) {
     return db.delete(DATABASE_TABLE, KEY_ID + "=" + _rowIndex, null) > 0;
   }
 
-  // Update a task
+  // Update an alarm
   public boolean update(long _rowIndex,Alarm _entry) {
     ContentValues newValue = new ContentValues();
     newValue.put(KEY_HOUR, _entry.getHour());
@@ -120,16 +118,20 @@ public class AlarmAdapter {
       throw new SQLException("No item found for row: " + _rowIndex);
     }
 	  
+    //Build the result
     Alarm result = new Alarm();
     result.setHour(cursor.getInt(cursor.getColumnIndex(KEY_HOUR)));
     result.setMinute(cursor.getInt(cursor.getColumnIndex(KEY_MINUTE)));
     result.setDaysString(cursor.getString(cursor.getColumnIndex(KEY_DAYS)));
     result.setId(cursor.getLong(cursor.getColumnIndex(KEY_ID)));
+    
+    //Debugging
     Log.d(TAG," Out of the database: "+cursor.getLong(cursor.getColumnIndex(KEY_ID)));
     Log.d(TAG," Out of the object: "+result.getId());
     return result;  
   }
    
+  //Helper class for working with SQLite
   private static class DBOpenHelper extends SQLiteOpenHelper {
 
 	  public DBOpenHelper(Context context, String name,
